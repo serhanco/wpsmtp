@@ -34,7 +34,6 @@ The WP SMTP Mailer plugin is a robust and secure solution for sending emails fro
 *   Implements a configurable log retention policy to manage database size.
 *   Supports defining SMTP credentials as constants in `wp-config.php` for enhanced security.
 *   Performs a clean uninstallation, removing all plugin data.
-*   Allows enabling/disabling email logging from the settings panel.
 
 ## Installation
 
@@ -75,9 +74,8 @@ Alternatively, you can upload the `smtp-mailer` folder (after extracting the ZIP
     *   Go to your WordPress admin dashboard (`Dashboard > Home`).
     *   Locate the "SMTP Mailer Statistics" widget to view a summary of successful and failed email attempts for today, the last 7 days, and the last 30 days.
 
-4.  **Logging Options:**
-    *   On the `Settings > SMTP Mailer` page, under "Logging Settings", you will find the "Enable Email Logging" checkbox. Uncheck this to stop logging email attempts.
-    *   You can also configure "Log Retention (Days)" to specify how many days email logs are retained in the database. This helps manage database size.
+4.  **Manage Log Retention:**
+    *   On the `Settings > SMTP Mailer` page, under "Logging Settings", you can configure how many days email logs are retained in the database. This helps manage database size.
 
 ## Contributing
 
