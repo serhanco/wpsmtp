@@ -1,8 +1,11 @@
-# WP SMTP Mailer Plugin
+# SMTP Mailer by IES
 
 ## Overview
 
-The WP SMTP Mailer plugin is a robust and secure solution for sending emails from your WordPress site using a custom SMTP server. By default, WordPress uses PHP's `mail()` function, which can often lead to emails being marked as spam or not being delivered at all. This plugin bypasses that limitation by routing all outgoing WordPress emails through your specified SMTP server, ensuring higher deliverability and reliability.
+*   **Author:** Serhan Demirel
+*   **Author URI:** https://serhandemirel.com
+
+The SMTP Mailer by IES plugin is a robust and secure solution for sending emails from your WordPress site using a custom SMTP server. By default, WordPress uses PHP's `mail()` function, which can often lead to emails being marked as spam or not being delivered at all. This plugin bypasses that limitation by routing all outgoing WordPress emails through your specified SMTP server, ensuring higher deliverability and reliability.
 
 ## Goals
 
