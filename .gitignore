@@ -1,0 +1,36 @@
+# WordPress specific ignores
+/wp-content/cache/
+/wp-content/uploads/
+/wp-content/blogs.dir/
+/wp-content/upgrade/
+/wp-content/ai1wm-backups/
+
+# Plugin specific ignores (if any, though for this plugin, most files are source)
+
+# Log files
+*.log
+*.sql
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependency directories
+/node_modules/
+/vendor/
+
+# Build artifacts
+/build/
+/dist/
+/tmp/
