@@ -45,6 +45,13 @@ class SMTP_Mailer_Logger {
      * @param string $error_message Optional. Any error message if the email failed.
      */
     public static function log_email($recipient, $subject, $status, $error_message = '') {
+        $options = get_option('smtp_mailer_options');
+        $enable_logging = isset($options['enable_logging']) && $options['enable_logging'] == '1';
+
+        if (!$enable_logging) {
+            return; // Logging is disabled
+        }
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'smtp_mailer_logs';
 
@@ -110,9 +117,15 @@ class SMTP_Mailer_Logger {
      * Cleans up old email logs based on retention settings.
      */
     public static function cleanup_logs() {
+        $options = get_option('smtp_mailer_options');
+        $enable_logging = isset($options['enable_logging']) && $options['enable_logging'] == '1';
+
+        if (!$enable_logging) {
+            return; // Logging is disabled, no cleanup needed
+        }
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'smtp_mailer_logs';
-        $options = get_option('smtp_mailer_options');
         $retention_days = isset($options['log_retention']) ? absint($options['log_retention']) : 30; // Default to 30 days
 
         if ($retention_days > 0) {

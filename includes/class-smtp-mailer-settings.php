@@ -165,6 +165,19 @@ class SMTP_Mailer_Settings {
         );
 
         add_settings_field(
+            'smtp_mailer_enable_logging',
+            'Enable Email Logging',
+            array($this, 'checkbox_field_callback'),
+            'smtp-mailer',
+            'smtp_mailer_section_logging',
+            array(
+                'name' => 'enable_logging',
+                'label_for' => 'smtp_mailer_enable_logging',
+                'description' => 'Check this box to enable logging of all email attempts.'
+            )
+        );
+
+        add_settings_field(
             'smtp_mailer_log_retention',
             'Log Retention (Days)',
             array($this, 'text_field_callback'),
