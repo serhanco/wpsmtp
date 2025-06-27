@@ -36,21 +36,59 @@ class SMTP_Mailer {
 
             $use_wp_config = isset($options['use_wp_config']) && $options['use_wp_config'] == '1';
 
+            $host = '';
+            $port = '';
+            $username = '';
+            $password = '';
+            $encryption = '';
+            $from_email = '';
+            $from_name = '';
+
+            if ($use_wp_config) {
+                // Attempt to get credentials from wp-config.php constants
+                if (defined('SMTP_MAILER_HOST')) $host = SMTP_MAILER_HOST;
+                if (defined('SMTP_MAILER_PORT')) $port = SMTP_MAILER_PORT;
+                if (defined('SMTP_MAILER_USERNAME')) $username = SMTP_MAILER_USERNAME;
+                if (defined('SMTP_MAILER_PASSWORD')) $password = SMTP_MAILER_PASSWORD;
+                if (defined('SMTP_MAILER_ENCRYPTION')) $encryption = SMTP_MAILER_ENCRYPTION;
+                if (defined('SMTP_MAILER_FROM_EMAIL')) $from_email = SMTP_MAILER_FROM_EMAIL;
+                if (defined('SMTP_MAILER_FROM_NAME')) $from_name = SMTP_MAILER_FROM_NAME;
+
+            } else {
+                // Fallback to database options
+                $host = isset($options['host']) ? $options['host'] : '';
+                $port = isset($options['port']) ? $options['port'] : '';
+                $username = isset($options['username']) ? $options['username'] : '';
+                $password = isset($options['password']) ? $options['password'] : '';
+                $encryption = isset($options['encryption']) ? $options['encryption'] : '';
+                $from_email = isset($options['from_email']) ? $options['from_email'] : '';
+                $from_name = isset($options['from_name']) ? $options['from_name'] : '';
+            }
+
+            if (empty($host) || empty($username) || empty($password)) {
+                // Don't attempt to send via SMTP if essential settings are missing
+                return;
+            }
+
             $phpmailer->isSMTP();
-            $phpmailer->Host = 'smtp.office365.com';
+            $phpmailer->Host = sanitize_text_field($host);
             $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = 587;
-            $phpmailer->Username = 'webapp@acibademimc.com';
-            $phpmailer->Password = 'rlclqvbgbmmmxddc';
-            $phpmailer->SMTPSecure = 'tls';
+            $phpmailer->Port = absint($port);
+            $phpmailer->Username = sanitize_email($username);
+            $phpmailer->Password = $password; // Password is not sanitized as it needs to be exact
+            $phpmailer->SMTPSecure = sanitize_text_field($encryption);
 
-            // Set From email and From name
-            $phpmailer->From = 'webapp@acibademimc.com';
-            $phpmailer->FromName = 'Acibadem IMC';
+            // Set From email and From name if provided, otherwise PHPMailer will use defaults
+            if (!empty($from_email)) {
+                $phpmailer->From = sanitize_email($from_email);
+            }
+            if (!empty($from_name)) {
+                $phpmailer->FromName = sanitize_text_field($from_name);
+            }
 
-            // Enable SMTP debugging and output to error log
-            $phpmailer->SMTPDebug = 2;
-            $phpmailer->Debugoutput = 'error_log';
+            // Optional: Enable SMTP debugging for development
+            // $phpmailer->SMTPDebug = 2; // Enable verbose debug output
+            // $phpmailer->Debugoutput = 'error_log'; // Output debug messages to error log
         } catch (PHPMailerException $e) {
             error_log('SMTP Mailer Error: ' . $e->getMessage());
         }
