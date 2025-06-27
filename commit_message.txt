@@ -1,1 +1,1 @@
-New Version: 1.8 - Reverted debugging changes and prepared for further troubleshooting.
+New Version: 1.9 - Reverted set_callback to send_callback to fix fatal error with older PHPMailer versions.
