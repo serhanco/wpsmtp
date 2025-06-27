@@ -315,6 +315,9 @@ define(\'SMTP_MAILER_FROM_NAME\', \'Your Name\');</code></pre>';
             // wp_mail will trigger the phpmailer_init hook and our send_callback
             $sent = wp_mail($to, $subject, $message);
 
+            // Manually call the send_callback for logging
+            SMTP_Mailer_Logger::send_callback($sent, $to, $subject, $message);
+
             // Admin notices are handled by the send_callback now, but we can add a generic one here
             if ($sent) {
                 add_action('admin_notices', function() {
