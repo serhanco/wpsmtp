@@ -1,0 +1,1 @@
+Fix: PHPMailer Fatal Error and Version Bump to 1.7

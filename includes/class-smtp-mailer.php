@@ -87,7 +87,7 @@ class SMTP_Mailer {
             }
 
             // Set the send callback for logging
-            $phpmailer->send_callback = 'SMTP_Mailer_Logger::send_callback';
+            $phpmailer->set_callback('send', 'SMTP_Mailer_Logger::send_callback');
 
             // Optional: Enable SMTP debugging for development
             // $phpmailer->SMTPDebug = 2; // Enable verbose debug output
