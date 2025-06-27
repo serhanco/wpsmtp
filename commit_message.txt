@@ -1,1 +1,1 @@
-Fix: PHPMailer Fatal Error and Version Bump to 1.7
+New Version: 1.8 - Reverted debugging changes and prepared for further troubleshooting.

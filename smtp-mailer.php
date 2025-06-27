@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SMTP Mailer
  * Description: Sends WordPress emails via SMTP using configurable credentials, with logging and dashboard statistics.
- * Version: 1.7
+ * Version: 1.8
  * Author: Your Name
  */
 
