@@ -1,9 +1,12 @@
 <?php
 /**
- * Plugin Name: SMTP Mailer
- * Description: Sends WordPress emails via SMTP using configurable credentials, with logging and dashboard statistics.
+ * Plugin Name: SMTP Mailer by IES
+ * Description: Sends WordPress emails via SMTP using configurable credentials, with logging and dashboard statistics for .
  * Version: 2.0
- * Author: Your Name
+ * Author: Serhan Demirel
+ * Author URI: https://serhandemirel.com
+ * License: GPL2
+ * Text Domain: smtp-mailer
  */
 
 // Exit if accessed directly

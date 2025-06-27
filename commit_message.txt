@@ -1,1 +1,0 @@
-New Version: 2.0 - Fixed PHP Deprecated warning by directly calling logger callback.

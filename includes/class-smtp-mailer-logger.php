@@ -140,4 +140,3 @@ class SMTP_Mailer_Logger {
 }
 
 // Hook the cleanup function to the scheduled event
-add_action('smtp_mailer_cleanup_logs_event', 'SMTP_Mailer_Logger::cleanup_logs');

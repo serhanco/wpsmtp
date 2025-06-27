@@ -312,19 +312,29 @@ define(\'SMTP_MAILER_FROM_NAME\', \'Your Name\');</code></pre>';
             $subject = sanitize_text_field($_POST['smtp_mailer_test_subject']);
             $message = wp_kses_post($_POST['smtp_mailer_test_message']);
 
-            // wp_mail will trigger the phpmailer_init hook and our send_callback
             $sent = wp_mail($to, $subject, $message);
 
-            
+            // Start session if not already started
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
 
-            // Admin notices are handled by the send_callback now, but we can add a generic one here
             if ($sent) {
                 add_action('admin_notices', function() {
-                    echo '<div class="notice notice-success is-dismissible"><p>Test email initiated. Check logs for status.</p></div>';
+                    echo '<div class="notice notice-success is-dismissible"><p>Test email sent successfully.</p></div>';
                 });
             } else {
                 add_action('admin_notices', function() {
-                    echo '<div class="notice notice-error is-dismissible"><p>Test email failed to initiate. Check your SMTP settings.</p></div>';
+                    $error_message = 'Test email failed to send. Please check your SMTP settings.';
+                    if (isset($_SESSION['smtp_mailer_debug']) && !empty($_SESSION['smtp_mailer_debug'])) {
+                        $debug_output = $_SESSION['smtp_mailer_debug'];
+                        if (strpos($debug_output, 'Peer certificate CN=') !== false && strpos($debug_output, 'did not match expected CN=') !== false) {
+                            $error_message .= '<br><strong>SSL Certificate Mismatch:</strong> The hostname you are trying to connect to does not match the SSL certificate presented by the server. Please verify your SMTP Host setting or contact your hosting provider.';
+                        }
+                        $error_message .= '<br><strong>Debug Output:</strong><pre>' . esc_html($debug_output) . '</pre>';
+                        unset($_SESSION['smtp_mailer_debug']); // Clear debug info after display
+                    }
+                    echo '<div class="notice notice-error is-dismissible"><p>' . $error_message . '</p></div>';
                 });
             }
         }
